@@ -1,0 +1,15 @@
+[
+    {
+        "modid": "colosseum",
+        "name": "Colosseum",
+        "version": "0.1.0",
+        "description": "A Minecraft PvP plugin where players can choose classes, skills, and more.",
+        "url": "https://dannychoi.dev",
+        "dependencies": [
+            "spongeapi@7.2.0"
+        ],
+        "requiredMods": [
+            "spongeapi@7.2.0"
+        ]
+    }
+]
