@@ -6,15 +6,20 @@ import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandManager;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
+import org.spongepowered.api.data.type.HandTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
+import org.spongepowered.api.event.entity.InteractEntityEvent;
 import org.spongepowered.api.event.filter.cause.All;
 import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
+import org.spongepowered.api.item.ItemType;
+import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.format.TextColors;
 
 import java.util.HashMap;
 
@@ -60,6 +65,38 @@ public class Colosseum {
         }
     }
 
+    // Below listener is for calling ability (by right clicking sword)
+    @Listener
+    public void onPlayerRightClick(InteractEntityEvent.Secondary e, @First Player p) {
+        ItemType heldItemType = p.getItemInHand(HandTypes.MAIN_HAND).get().getType();
+        if (heldItemType.equals(ItemTypes.IRON_SWORD) ||
+                heldItemType.equals(ItemTypes.DIAMOND_SWORD) ||
+                heldItemType.equals(ItemTypes.STONE_SWORD) ||
+                heldItemType.equals(ItemTypes.WOODEN_SWORD) ||
+                heldItemType.equals(ItemTypes.GOLDEN_SWORD))
+        {
+            if (!activePlayers.containsKey(p)) {
+                p.sendMessage(Text.builder("No species selected.").color(TextColors.RED).build());
+                return;
+            }
+
+            getPlayerProfileOf(p).useSkill();
+        }
+    }
+
+    // Below listener is for calling ability (via left click bow)
+    @Listener
+    public void onPlayerLeftClick(InteractEntityEvent.Primary e, @First Player p) {
+        if (p.getItemInHand(HandTypes.MAIN_HAND).get().getType().equals(ItemTypes.BOW)) {
+            if (!activePlayers.containsKey(p)) {
+                p.sendMessage(Text.builder("No species selected.").color(TextColors.RED).build());
+                return;
+            }
+
+            getPlayerProfileOf(p).useSkill();
+        }
+    }
+
     private void createAndRegisterCommands() {
         CommandSpec species = CommandSpec.builder()
                 .description(Text.of("Select a species."))
@@ -71,7 +108,15 @@ public class Colosseum {
         cmdManager.register(this, species, "species", "sp");
     }
 
-    public static HashMap<Player, PlayerProfile> getActivePlayers() {
-        return activePlayers;
+    public static void setPlayerSpecies(Player p, SpeciesType st) {
+        PlayerProfile pp = new PlayerProfile(p, st);
+        activePlayers.put(p, pp);
+        Species pSpecies = SpeciesFinder.getByType(st);
+        pSpecies.equip(p);
+    }
+
+    // May be null!
+    public static PlayerProfile getPlayerProfileOf(Player p) {
+        return activePlayers.get(p);
     }
 }
