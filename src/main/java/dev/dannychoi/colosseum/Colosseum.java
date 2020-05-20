@@ -104,8 +104,15 @@ public class Colosseum {
                 .executor(new CommandSpecies())
                 .build();
 
+        CommandSpec setCharge = CommandSpec.builder()
+                .description(Text.of("Set your charge."))
+                .arguments(GenericArguments.integer(Text.of("charge")))
+                .executor(new CommandSetCharge())
+                .build();
+
         CommandManager cmdManager = Sponge.getCommandManager();
         cmdManager.register(this, species, "species", "sp");
+        cmdManager.register(this, setCharge, "setcharge", "sc");
     }
 
     public static void setPlayerSpecies(Player p, SpeciesType st) {
