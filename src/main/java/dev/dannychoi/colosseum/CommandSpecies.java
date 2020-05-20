@@ -24,14 +24,16 @@ public class CommandSpecies implements CommandExecutor {
             return CommandResult.success();
         }
 
-        String argSpecies = args.<Text>getOne("species").get().toString(); // This variable now has the first argument!
+        Player sender = (Player) src;
+        String argSpecies = args.getOne("species").get().toString(); // This variable now has the first argument!
 
         // This for loop tries to match the user's argument (species) with a Species.SpeciesType.
         for (SpeciesType type : SpeciesType.values()) {
             // If the iterated SpeciesType matches the user's inputted arg.
-            PlayerProfile userProfile = Colosseum.getActivePlayers().get((Player) src);
-            if (userProfile.getSpeciesType().equals(type.toString())) {
+            PlayerProfile userProfile = new PlayerProfile(sender, null);
+            if (argSpecies.equalsIgnoreCase(type.toString())) {
                 userProfile.setSpeciesType(type);
+                Colosseum.getActivePlayers().put(sender, userProfile);
                 Text successMsg = Text.builder("You are now a ")
                         .append(Text.of(type.toString()))
                         .color(TextColors.GREEN)

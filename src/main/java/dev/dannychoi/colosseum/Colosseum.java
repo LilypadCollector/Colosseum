@@ -7,20 +7,16 @@ import org.spongepowered.api.command.CommandManager;
 import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.entity.living.player.Player;
-import org.spongepowered.api.event.cause.entity.damage.DamageType;
-import org.spongepowered.api.event.cause.entity.damage.source.DamageSource;
+import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.cause.entity.damage.source.EntityDamageSource;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.filter.cause.All;
 import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
-import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 @Plugin(
         id = "colosseum",
@@ -36,6 +32,9 @@ public class Colosseum {
     @Listener
     public void onServerStart(GameStartedServerEvent event) {
         logger.info("[Colosseum] Beginning setup...");
+
+        activePlayers = new HashMap<Player, PlayerProfile>();
+        createAndRegisterCommands();
 
         logger.info("[Colosseum] Setup finished.");
     }
