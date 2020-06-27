@@ -1,4 +1,4 @@
-package dev.dannychoi.colosseum;
+package dev.dannychoi.colosseum.species;
 
 // This class is essentially used to get an instance of a certain species.
 public class SpeciesFinder {

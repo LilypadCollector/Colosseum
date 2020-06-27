@@ -1,5 +1,7 @@
-package dev.dannychoi.colosseum;
+package dev.dannychoi.colosseum.commands;
 
+import dev.dannychoi.colosseum.Colosseum;
+import dev.dannychoi.colosseum.PlayerProfile;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -27,8 +29,12 @@ public class CommandSetCharge implements CommandExecutor {
             return CommandResult.success();
         }
 
+        if (arg == -1) {
+            src.sendMessage(Text.of("You've invoked the -1 debug key. Charge = " + pp.getCharge()));
+        }
+
         pp.setCharge(arg);
-        src.sendMessage(Text.builder("Successfully set charge.").color(TextColors.GREEN).build());
+        src.sendMessage(Text.builder("Successfully set charge to " + arg + ".").color(TextColors.GREEN).build());
         return CommandResult.success();
     }
 }

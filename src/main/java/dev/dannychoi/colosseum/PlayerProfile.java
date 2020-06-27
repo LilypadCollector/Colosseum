@@ -1,6 +1,8 @@
 package dev.dannychoi.colosseum;
 
-import org.spongepowered.api.data.key.Key;
+import dev.dannychoi.colosseum.species.Species;
+import dev.dannychoi.colosseum.species.SpeciesDog;
+import dev.dannychoi.colosseum.species.SpeciesType;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
 
@@ -39,6 +41,10 @@ public class PlayerProfile {
         return speciesType;
     }
 
+    public void useSkill() {
+        getSpeciesObject().useSkill(this);
+    }
+
     // Adds to the player's charge
     public void addCharge(int chargeToAdd) {
         charge += chargeToAdd;
@@ -53,6 +59,20 @@ public class PlayerProfile {
         charge -= chargeToSub;
         if (charge < 0)
             charge = 0;
+        displayCharge();
+    }
+
+    public void emptyCharge() {
+        charge = 0;
+        displayCharge();
+    }
+
+    public int getCharge() {
+        return charge;
+    }
+
+    public void setCharge(int charge) {
+        this.charge = charge;
         displayCharge();
     }
 
