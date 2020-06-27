@@ -4,7 +4,6 @@ import dev.dannychoi.colosseum.Colosseum;
 import org.spongepowered.api.data.type.HandTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.block.InteractBlockEvent;
 import org.spongepowered.api.event.filter.cause.First;
 import org.spongepowered.api.event.item.inventory.InteractItemEvent;
 import org.spongepowered.api.item.ItemType;

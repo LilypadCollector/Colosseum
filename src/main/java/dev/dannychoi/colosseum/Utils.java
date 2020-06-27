@@ -1,15 +1,9 @@
 package dev.dannychoi.colosseum;
 
-import com.flowpowered.math.vector.Vector2d;
-import com.flowpowered.math.vector.Vector3d;
-import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.data.manipulator.mutable.PotionEffectData;
 import org.spongepowered.api.data.manipulator.mutable.item.EnchantmentData;
-import org.spongepowered.api.effect.Viewer;
 import org.spongepowered.api.effect.particle.ParticleEffect;
-import org.spongepowered.api.effect.particle.ParticleOptions;
 import org.spongepowered.api.effect.particle.ParticleType;
-import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.api.effect.potion.PotionEffect;
 import org.spongepowered.api.effect.potion.PotionEffectType;
 import org.spongepowered.api.effect.potion.PotionEffectTypes;
@@ -20,9 +14,6 @@ import org.spongepowered.api.item.enchantment.Enchantment;
 import org.spongepowered.api.item.enchantment.EnchantmentType;
 import org.spongepowered.api.item.inventory.ItemStack;
 import org.spongepowered.api.world.World;
-
-import java.beans.Visibility;
-import java.util.Vector;
 
 public class Utils {
     public static void addEnchant(ItemStack it, EnchantmentType et, int level) {
