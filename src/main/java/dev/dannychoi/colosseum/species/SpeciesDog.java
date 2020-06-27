@@ -31,7 +31,7 @@ public class SpeciesDog implements Species {
                 .add(Keys.UNBREAKABLE, true)
                 .build();
         ItemStack chestplate = ItemStack.builder()
-                .itemType(ItemTypes.IRON_CHESTPLATE)
+                .itemType(ItemTypes.DIAMOND_CHESTPLATE)
                 .add(Keys.UNBREAKABLE, true)
                 .build();
         Utils.addEnchant(chestplate, EnchantmentTypes.PROJECTILE_PROTECTION, 4);
@@ -57,6 +57,10 @@ public class SpeciesDog implements Species {
                 .add(Keys.UNBREAKABLE, true)
                 .build();
         Utils.addEnchant(bow, EnchantmentTypes.INFINITY, 1);
+        ItemStack axe = ItemStack.builder()
+                .itemType(ItemTypes.IRON_AXE)
+                .add(Keys.UNBREAKABLE, true)
+                .build();
 
         ItemStack woodStack = ItemStack.builder()
                 .itemType(ItemTypes.PLANKS)
@@ -76,6 +80,7 @@ public class SpeciesDog implements Species {
         pInv.offer(sword);
         pInv.offer(pickaxe);
         pInv.offer(bow);
+        pInv.offer(axe);
         pInv.offer(Utils.hPot(4));
         pInv.offer(steak);
 
