@@ -43,8 +43,14 @@ public class Colosseum {
     @Listener
     public void onServerStart(GameStartedServerEvent event) {
         logger.info("[Colosseum] Beginning setup...");
+
+        // This is what will manage List of active players, HashMap tying players to their PlayerProfiles, etc. See GameManager class.
         gameManager = new GameManager();
+
+        // This registers Minecraft plugin commands to CommandManager.
         registerCommands();
+
+        // This registers plugin Event Listeners, all found inside listeners directory.
         registerListeners();
         logger.info("[Colosseum] Setup finished.");
     }
