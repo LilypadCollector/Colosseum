@@ -7,12 +7,14 @@ import org.spongepowered.api.effect.particle.ParticleType;
 import org.spongepowered.api.effect.potion.PotionEffect;
 import org.spongepowered.api.effect.potion.PotionEffectType;
 import org.spongepowered.api.effect.potion.PotionEffectTypes;
+import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.living.Living;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.enchantment.Enchantment;
 import org.spongepowered.api.item.enchantment.EnchantmentType;
 import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
 public class Utils {
@@ -31,9 +33,9 @@ public class Utils {
         );
     }
 
-    // Spawns particles above a player.
+    // Spawns particles above an entity.
     // count: The number of particles to spawn, equally distributed in a circle pattern.
-    public static void spawnParticlesAbove(Player target, ParticleType partType, int count) {
+    public static void spawnParticlesAbove(Entity target, ParticleType partType, int count) {
         World world = target.getWorld();
         ParticleEffect partEff = ParticleEffect.builder()
                 .type(partType)
@@ -48,6 +50,17 @@ public class Utils {
 //                p2.spawnParticles(partEff, target.getPosition().add());
             }
         }
+    }
+
+    public static void spawnParticlesAt(Entity target, ParticleType partType) {
+        ParticleEffect partEff = ParticleEffect.builder()
+                .type(partType)
+                .quantity(5)
+                .build();
+
+        for (Player p : target.getWorld().getPlayers())
+            p.spawnParticles(partEff, target.getLocation().getPosition());
+
     }
 
     // Simply returns an hp potion
