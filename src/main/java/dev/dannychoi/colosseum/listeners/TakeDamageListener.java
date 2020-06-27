@@ -1,6 +1,7 @@
 package dev.dannychoi.colosseum.listeners;
 
 import dev.dannychoi.colosseum.Colosseum;
+import dev.dannychoi.colosseum.GameManager;
 import dev.dannychoi.colosseum.PlayerProfile;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityTypes;
@@ -10,24 +11,23 @@ import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.event.filter.cause.First;
 
-import static dev.dannychoi.colosseum.Colosseum.getPlayerProfileOf;
-
 public class TakeDamageListener {
 
     @Listener
     public void onPlayerDamage(DamageEntityEvent e, @First Entity attacker /* Caution! May be arrow! */) {
+        GameManager gameManager = Colosseum.getGameManager();
 
         if (!(e.getTargetEntity() instanceof Player))
             return;
         Player p = (Player) e.getTargetEntity();
-        if (getPlayerProfileOf(p) == null) // If player hasn't chosen a species yet, return.
+        if (gameManager.getPlayerProfileOf(p) == null) // If player hasn't chosen a species yet, return.
             return;
         PlayerProfile damagedPP;
         PlayerProfile attackerPP;
 
         if ( (!attacker.getType().equals(EntityTypes.PLAYER) && !(attacker.getType().equals(EntityTypes.TIPPED_ARROW)))) { // If damage was not caused by player/arrow, ONLY call onTakeDamage() of damaged player.
 
-            damagedPP = getPlayerProfileOf(p);
+            damagedPP = gameManager.getPlayerProfileOf(p);
             damagedPP.getSpeciesObject().onTakeDamage(damagedPP, null);
 
         } else { // If damage WAS CAUSED by another player, call BOTH (1) onTakeDamage (2) onHitPlayer.
@@ -50,8 +50,8 @@ public class TakeDamageListener {
             if (attacker.equals(p))
                 return; // So that players damaging THEMSELVES doesn't trigger onTakeDamage or onHitPlayer
 
-            damagedPP = getPlayerProfileOf(p);
-            attackerPP = getPlayerProfileOf((Player) attacker);
+            damagedPP = gameManager.getPlayerProfileOf(p);
+            attackerPP = gameManager.getPlayerProfileOf((Player) attacker);
 
             damagedPP.getSpeciesObject().onTakeDamage(damagedPP, null);
 

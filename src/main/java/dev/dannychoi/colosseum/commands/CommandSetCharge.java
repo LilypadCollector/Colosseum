@@ -20,7 +20,7 @@ public class CommandSetCharge implements CommandExecutor {
         }
 
         Player p = (Player) src;
-        PlayerProfile pp = Colosseum.getPlayerProfileOf(p);
+        PlayerProfile pp = Colosseum.getGameManager().getPlayerProfileOf(p);
 
         int arg = args.<Integer>getOne("charge").get();
 

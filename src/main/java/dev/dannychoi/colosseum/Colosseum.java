@@ -38,14 +38,14 @@ public class Colosseum {
     @Inject
     private Logger logger;
 
+    private static GameManager gameManager;
+
     @Listener
     public void onServerStart(GameStartedServerEvent event) {
         logger.info("[Colosseum] Beginning setup...");
-
-        activePlayers = new HashMap<Player, PlayerProfile>();
+        gameManager = new GameManager();
         registerCommands();
         registerListeners();
-
         logger.info("[Colosseum] Setup finished.");
     }
 
@@ -76,19 +76,7 @@ public class Colosseum {
         em.registerListeners(this, new TakeDamageListener());
     }
 
-    public static void setPlayerSpecies(Player p, SpeciesType st) {
-        PlayerProfile pp = new PlayerProfile(p, st);
-        activePlayers.put(p, pp);
-        Species pSpecies = SpeciesFinder.getByType(st);
-        pSpecies.equip(p);
-    }
-
-    // May be null!
-    public static PlayerProfile getPlayerProfileOf(Player p) {
-        return activePlayers.get(p);
-    }
-
-    public static boolean isPlayerActive(Player p) {
-        return activePlayers.containsKey(p);
+    public static GameManager getGameManager() {
+        return gameManager;
     }
 }

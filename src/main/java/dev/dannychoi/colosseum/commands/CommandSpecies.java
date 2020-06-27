@@ -33,7 +33,7 @@ public class CommandSpecies implements CommandExecutor {
         for (SpeciesType type : SpeciesType.values()) {
             // If the iterated SpeciesType matches the user's inputted arg.
             if (argSpecies.equalsIgnoreCase(type.toString())) {
-                Colosseum.setPlayerSpecies(sender, type);
+                Colosseum.getGameManager().setPlayerSpecies(sender, type);
                 sender.offer(Keys.MAX_HEALTH, 40D); // Set to 20 hearts.
                 sender.offer(Keys.HEALTH, sender.maxHealth().get()); // Equip player
                 Text successMsg = Text.builder("You are now a ")
