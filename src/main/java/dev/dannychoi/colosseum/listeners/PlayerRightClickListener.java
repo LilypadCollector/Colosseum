@@ -6,6 +6,7 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.block.InteractBlockEvent;
 import org.spongepowered.api.event.filter.cause.First;
+import org.spongepowered.api.event.item.inventory.InteractItemEvent;
 import org.spongepowered.api.item.ItemType;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.text.Text;
@@ -16,7 +17,7 @@ import static dev.dannychoi.colosseum.Colosseum.getPlayerProfileOf;
 public class PlayerRightClickListener {
     // Below listener is for calling ability (by right clicking sword)
     @Listener
-    public void onPlayerRightClick(InteractBlockEvent.Secondary.MainHand e, @First Player p) {
+    public void onPlayerRightClick(InteractItemEvent.Secondary.MainHand e, @First Player p) {
         ItemType heldItemType = p.getItemInHand(HandTypes.MAIN_HAND).get().getType();
 
         if (heldItemType.equals(ItemTypes.IRON_SWORD) ||
