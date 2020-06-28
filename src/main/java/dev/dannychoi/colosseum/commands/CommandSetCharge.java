@@ -2,6 +2,8 @@ package dev.dannychoi.colosseum.commands;
 
 import dev.dannychoi.colosseum.Colosseum;
 import dev.dannychoi.colosseum.PlayerProfile;
+import org.spongepowered.api.block.BlockState;
+import org.spongepowered.api.block.BlockTypes;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -31,6 +33,8 @@ public class CommandSetCharge implements CommandExecutor {
 
         if (arg == -1) {
             src.sendMessage(Text.of("You've invoked the -1 debug key. Charge = " + pp.getCharge()));
+            ((Player) src).getWorld().setBlock(((Player) src).getLocation().getBlockPosition(), BlockState.builder().blockType(BlockTypes.BRICK_BLOCK).build());
+            return CommandResult.success();
         }
 
         pp.setCharge(arg);
