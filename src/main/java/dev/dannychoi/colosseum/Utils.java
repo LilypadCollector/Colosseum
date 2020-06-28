@@ -1,9 +1,13 @@
 package dev.dannychoi.colosseum;
 
+import com.flowpowered.math.vector.Vector3d;
+import com.flowpowered.math.vector.Vector3i;
+import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.manipulator.mutable.PotionEffectData;
 import org.spongepowered.api.data.manipulator.mutable.item.EnchantmentData;
 import org.spongepowered.api.effect.particle.ParticleEffect;
 import org.spongepowered.api.effect.particle.ParticleType;
+import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.api.effect.potion.PotionEffect;
 import org.spongepowered.api.effect.potion.PotionEffectType;
 import org.spongepowered.api.effect.potion.PotionEffectTypes;
@@ -14,8 +18,13 @@ import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.enchantment.Enchantment;
 import org.spongepowered.api.item.enchantment.EnchantmentType;
 import org.spongepowered.api.item.inventory.ItemStack;
+import org.spongepowered.api.text.Text;
+import org.spongepowered.api.util.blockray.BlockRay;
+import org.spongepowered.api.util.blockray.BlockRayHit;
 import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
+
+import java.util.Optional;
 
 public class Utils {
     public static void addEnchant(ItemStack it, EnchantmentType et, int level) {
@@ -63,6 +72,35 @@ public class Utils {
 
     }
 
+    public static Optional<Player> getPlayerLookingAt(Player user, int distance, boolean seeThroughBlocks, ParticleType... particles) {
+        BlockRay<World> blockRay = BlockRay.from(user)
+                .direction(user.getHeadRotation())
+                .distanceLimit(distance)
+                .build();
+
+        // First for-loop: iterates through all blocks in BlockRay.
+        // Second for-loop: checks all players to see if they're inside the current iterated block.
+        for (BlockRayHit<World> cur = blockRay.next(); !cur.equals(blockRay.end()); cur = blockRay.next()) {
+            // First, we play the particle at current iteration block.
+            for (ParticleType pt : particles)
+                user.getWorld().spawnParticles( ParticleEffect.builder().type(pt).build(), cur.getPosition());
+
+            // Secondly, we check current iteration block for players (and if one exists, we return it).
+            Vector3i rayBlockPos = cur.getBlockPosition();
+            for (Player target : user.getWorld().getPlayers()) {
+                Vector3i targetBlockPos = target.getLocation().getBlockPosition();
+                if (targetBlockPos.equals(rayBlockPos))
+                    return Optional.of(target);
+            }
+
+            // If function caller specified no to see-through, AND BlockRay hit non-air block, end the function.
+            if (!seeThroughBlocks && cur.getLocation().hasBlock())
+                return Optional.empty();
+        }
+
+        return Optional.empty();
+    }
+
     // Simply returns an hp potion
     public static ItemStack hPot(int amplifier) {
         ItemStack hPot = ItemStack.of(ItemTypes.POTION);
@@ -75,5 +113,11 @@ public class Utils {
         ItemStack hPot = ItemStack.of(ItemTypes.POTION);
         hPot.offer(hPot.getOrCreate(PotionEffectData.class).get().effects().add(PotionEffect.of(PotionEffectTypes.SPEED, amplifier, 1)));
         return hPot;
+    }
+
+    public static void logToMe(String msg) {
+        Optional<Player> me = Sponge.getServer().getPlayer("LilypadCollector");
+        if (me.isPresent())
+            me.get().sendMessage(Text.of(msg));
     }
 }
