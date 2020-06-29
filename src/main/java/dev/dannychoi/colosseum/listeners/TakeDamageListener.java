@@ -53,8 +53,6 @@ public class TakeDamageListener {
             damagedPP = gameManager.getPlayerProfileOf(p);
             attackerPP = gameManager.getPlayerProfileOf((Player) attacker);
 
-            damagedPP.getSpeciesObject().onTakeDamage(damagedPP, null);
-
             // To determine if damage was melee or bow:
             int damageType;
             if (isDmgTypeArrow)
@@ -65,6 +63,8 @@ public class TakeDamageListener {
             attackerPP.getSpeciesObject().onHitPlayer(attackerPP, damagedPP, damageType);
             int chargeToAdd = attackerPP.getSpeciesObject().getCPH();
             attackerPP.addCharge(chargeToAdd);
+
+            damagedPP.getSpeciesObject().onTakeDamage(damagedPP, null);
         }
     }
 
