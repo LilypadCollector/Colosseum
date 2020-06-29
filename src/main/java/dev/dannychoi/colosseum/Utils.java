@@ -38,7 +38,7 @@ public class Utils {
         entity.offer(
                 entity.getOrCreate(PotionEffectData.class).get()
                         .effects()
-                        .add(PotionEffect.of(peType, amplifier, durationInSeconds * 20))
+                        .add(PotionEffect.of(peType, amplifier-1, durationInSeconds * 20))
         );
     }
 
@@ -72,24 +72,25 @@ public class Utils {
 
     }
 
-    public static Optional<Player> getPlayerLookingAt(Player user, int distance, boolean seeThroughBlocks, ParticleType... particles) {
+    public static Optional<Player> getPlayerLookingAt(Player user, int distance, boolean seeThroughBlocks) {
         BlockRay<World> blockRay = BlockRay.from(user)
-                .direction(user.getHeadRotation())
                 .distanceLimit(distance)
                 .build();
 
         // First for-loop: iterates through all blocks in BlockRay.
         // Second for-loop: checks all players to see if they're inside the current iterated block.
-        for (BlockRayHit<World> cur = blockRay.next(); !cur.equals(blockRay.end()); cur = blockRay.next()) {
-            // First, we play the particle at current iteration block.
-            for (ParticleType pt : particles)
-                user.getWorld().spawnParticles( ParticleEffect.builder().type(pt).build(), cur.getPosition());
+        for (BlockRayHit<World> cur = blockRay.next();
+                blockRay.hasNext();
+                cur = blockRay.next()) {
 
-            // Secondly, we check current iteration block for players (and if one exists, we return it).
+            // We check current iteration block for players (and if one exists, we return it).
             Vector3i rayBlockPos = cur.getBlockPosition();
             for (Player target : user.getWorld().getPlayers()) {
+                if (target.equals(user))
+                    continue;
+
                 Vector3i targetBlockPos = target.getLocation().getBlockPosition();
-                if (targetBlockPos.equals(rayBlockPos))
+                if (targetBlockPos.equals(rayBlockPos) || targetBlockPos.equals(rayBlockPos.add(0, -1, 0)))
                     return Optional.of(target);
             }
 
@@ -99,6 +100,24 @@ public class Utils {
         }
 
         return Optional.empty();
+    }
+
+    public static void shootRay(Player user, int distance, ParticleType... particleTypes) {
+        BlockRay<World> ray = BlockRay.from(user)
+                .distanceLimit(distance)
+                .build();
+
+        BlockRayHit<World> cur = ray.next();
+        while (ray.hasNext()) {
+            for (ParticleType pt : particleTypes) {
+                ParticleEffect toShow = ParticleEffect.builder()
+                        .type(pt)
+                        .build();
+                cur.getExtent().spawnParticles(toShow, cur.getPosition());
+            }
+
+            cur = ray.next(); // Iterating to next.
+        }
     }
 
     // Simply returns an hp potion
