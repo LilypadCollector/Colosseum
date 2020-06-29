@@ -1,8 +1,6 @@
 package dev.dannychoi.colosseum;
 
-import dev.dannychoi.colosseum.species.Species;
-import dev.dannychoi.colosseum.species.SpeciesDog;
-import dev.dannychoi.colosseum.species.SpeciesType;
+import dev.dannychoi.colosseum.species.*;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
 
@@ -27,6 +25,10 @@ public class PlayerProfile {
             // TODO Edit this list every time a new species is added.
             case DOG:
                 return new SpeciesDog();
+            case ARCHER:
+                return new SpeciesArcher();
+            case SPACEWALKER:
+                return new SpeciesSpacewalker();
             default:
                 break;
         }
