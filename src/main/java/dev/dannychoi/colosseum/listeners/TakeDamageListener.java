@@ -60,10 +60,10 @@ public class TakeDamageListener {
             else
                 damageType = Colosseum.ATTACKTYPE_MELEE; // TODO: Check for cases where player indirectly attacks player. Eg) they set off TNT on another player.
 
-            attackerPP.getSpeciesObject().onHitPlayer(attackerPP, damagedPP, damageType);
             int chargeToAdd = attackerPP.getSpeciesObject().getCPH();
             attackerPP.addCharge(chargeToAdd);
 
+            attackerPP.getSpeciesObject().onHitPlayer(attackerPP, damagedPP, damageType);
             damagedPP.getSpeciesObject().onTakeDamage(damagedPP, null);
         }
     }
