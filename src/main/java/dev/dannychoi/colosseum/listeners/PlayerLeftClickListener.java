@@ -2,6 +2,8 @@ package dev.dannychoi.colosseum.listeners;
 
 import dev.dannychoi.colosseum.Colosseum;
 import dev.dannychoi.colosseum.GameManager;
+import dev.dannychoi.colosseum.PlayerProfile;
+import dev.dannychoi.colosseum.species.Species;
 import org.spongepowered.api.data.type.HandTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.Listener;
@@ -23,7 +25,15 @@ public class PlayerLeftClickListener {
                 return;
             }
 
-            gameManager.getPlayerProfileOf(p).useSkill();
+            PlayerProfile pp = Colosseum.getGameManager().getPlayerProfileOf(p);
+            Species pSpecies = pp.getSpeciesObject();
+            if (pp.getCharge() >= pSpecies.getChargeNeeded()) {
+                int result = pSpecies.useSkill(pp);
+                if (result == Species.SUCCESS_CODE)
+                    pp.minusCharge(pSpecies.getChargePerUse());
+            } else {
+                p.sendMessage(Text.builder("Not enough charge.").color(TextColors.RED).build());
+            }
         }
     }
 }

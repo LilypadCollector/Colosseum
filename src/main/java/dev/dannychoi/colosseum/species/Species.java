@@ -6,8 +6,8 @@ import org.spongepowered.api.event.cause.entity.damage.source.DamageSource;
 
 public interface Species {
 
-    int SUCCESS_CODE = 1;
-    int FAIL_CODE = 0;
+    final int SUCCESS_CODE = 1;
+    final int FAIL_CODE = 0;
 
     void equip(Player p);
     int useSkill(PlayerProfile p);
@@ -16,6 +16,8 @@ public interface Species {
     SpeciesType getSpeciesType();
     int getCPH();
     int getMaxCharge();
+    int getChargeNeeded();
+    int getChargePerUse();
     String getSkillName();
 
 }

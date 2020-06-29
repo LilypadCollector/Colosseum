@@ -92,9 +92,6 @@ public class SpeciesDog implements Species {
 
     @Override
     public int useSkill(PlayerProfile p) {
-        if (p.getCharge() < 100)
-            return FAIL_CODE; // Not enough charge to use skill!
-
         Player user = p.getPlayer(); // Player who uses ability
         Player receiver = null; // Soon to be the player (1) Within range (2) that the user is looking at
         Collection<Entity> playersInRange = user.getNearbyEntities(5);
@@ -114,7 +111,6 @@ public class SpeciesDog implements Species {
             Utils.addPotionEffect(receiver, PotionEffectTypes.SLOWNESS, 1, 2);
             user.playSound(SoundTypes.ENTITY_WOLF_HURT, user.getPosition(), 7);
 
-            p.emptyCharge();
             return SUCCESS_CODE;
         }
     }
@@ -154,6 +150,16 @@ public class SpeciesDog implements Species {
 
     @Override
     public int getMaxCharge() {
+        return 100;
+    }
+
+    @Override
+    public int getChargeNeeded() {
+        return 100;
+    }
+
+    @Override
+    public int getChargePerUse() {
         return 100;
     }
 
