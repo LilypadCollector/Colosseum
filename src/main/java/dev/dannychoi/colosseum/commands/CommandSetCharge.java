@@ -13,6 +13,8 @@ import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
+import java.util.Optional;
+
 public class CommandSetCharge implements CommandExecutor {
     @Override
     public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
@@ -22,22 +24,22 @@ public class CommandSetCharge implements CommandExecutor {
         }
 
         Player p = (Player) src;
-        PlayerProfile pp = Colosseum.getGameManager().getPlayerProfileOf(p);
+        Optional<PlayerProfile> pp = Colosseum.getGameManager().getPlayerProfileOf(p);
 
         int arg = args.<Integer>getOne("charge").get();
 
-        if (pp == null) {
+        if (!pp.isPresent()) {
             src.sendMessage(Text.builder("Select a species first.").color(TextColors.RED).build());
             return CommandResult.success();
         }
 
         if (arg == -1) {
-            src.sendMessage(Text.of("You've invoked the -1 debug key. Charge = " + pp.getCharge()));
+            src.sendMessage(Text.of("You've invoked the -1 debug key. Charge = " + pp.get().getCharge()));
             ((Player) src).getWorld().setBlock(((Player) src).getLocation().getBlockPosition(), BlockState.builder().blockType(BlockTypes.BRICK_BLOCK).build());
             return CommandResult.success();
         }
 
-        pp.setCharge(arg);
+        pp.get().setCharge(arg);
         src.sendMessage(Text.builder("Successfully set charge to " + arg + ".").color(TextColors.GREEN).build());
         return CommandResult.success();
     }

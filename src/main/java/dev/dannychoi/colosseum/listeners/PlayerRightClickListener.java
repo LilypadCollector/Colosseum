@@ -14,6 +14,8 @@ import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
 
+import java.util.Optional;
+
 public class PlayerRightClickListener {
     // Below listener is for calling ability (by right clicking sword)
     @Listener
@@ -28,17 +30,17 @@ public class PlayerRightClickListener {
                 heldItemType.equals(ItemTypes.WOODEN_SWORD) ||
                 heldItemType.equals(ItemTypes.GOLDEN_SWORD))
         {
-            if (!gameManager.isPlayerActive(p)) {
+            Optional<PlayerProfile> pp = Colosseum.getGameManager().getPlayerProfileOf(p);
+            if (!pp.isPresent()) {
                 p.sendMessage(Text.builder("No species selected.").color(TextColors.RED).build());
                 return;
             }
 
-            PlayerProfile pp = Colosseum.getGameManager().getPlayerProfileOf(p);
-            Species pSpecies = pp.getSpeciesObject();
-            if (pp.getCharge() >= pSpecies.getChargeNeeded()) {
-                int result = pSpecies.useSkill(pp);
+            Species pSpecies = pp.get().getSpeciesObject();
+            if (pp.get().getCharge() >= pSpecies.getChargeNeeded()) {
+                int result = pSpecies.useSkill(pp.get());
                 if (result == Species.SUCCESS_CODE)
-                    pp.minusCharge(pSpecies.getChargePerUse());
+                    pp.get().minusCharge(pSpecies.getChargePerUse());
             } else {
                 p.sendMessage(Text.builder("Not enough charge.").color(TextColors.RED).build());
             }

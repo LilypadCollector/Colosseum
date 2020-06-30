@@ -20,14 +20,14 @@ public class TakeDamageListener {
         if (!(e.getTargetEntity() instanceof Player))
             return;
         Player p = (Player) e.getTargetEntity();
-        if (gameManager.getPlayerProfileOf(p) == null) // If player hasn't chosen a species yet, return.
+        if (!gameManager.getPlayerProfileOf(p).isPresent()) // If player hasn't chosen a species yet, return.
             return;
         PlayerProfile damagedPP;
         PlayerProfile attackerPP;
 
         if ( (!attacker.getType().equals(EntityTypes.PLAYER) && !(attacker.getType().equals(EntityTypes.TIPPED_ARROW)))) { // If damage was not caused by player/arrow, ONLY call onTakeDamage() of damaged player.
 
-            damagedPP = gameManager.getPlayerProfileOf(p);
+            damagedPP = gameManager.getPlayerProfileOf(p).get();
             damagedPP.getSpeciesObject().onTakeDamage(damagedPP, null);
 
         } else { // If damage WAS CAUSED by another player, call BOTH (1) onTakeDamage (2) onHitPlayer.
@@ -50,8 +50,8 @@ public class TakeDamageListener {
             if (attacker.equals(p))
                 return; // So that players damaging THEMSELVES doesn't trigger onTakeDamage or onHitPlayer
 
-            damagedPP = gameManager.getPlayerProfileOf(p);
-            attackerPP = gameManager.getPlayerProfileOf((Player) attacker);
+            damagedPP = gameManager.getPlayerProfileOf(p).get();
+            attackerPP = gameManager.getPlayerProfileOf((Player) attacker).get();
 
             // To determine if damage was melee or bow:
             int damageType;
