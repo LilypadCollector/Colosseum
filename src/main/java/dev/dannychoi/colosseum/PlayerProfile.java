@@ -2,6 +2,8 @@ package dev.dannychoi.colosseum;
 
 import dev.dannychoi.colosseum.species.*;
 import org.spongepowered.api.data.key.Keys;
+import org.spongepowered.api.effect.sound.SoundCategories;
+import org.spongepowered.api.effect.sound.SoundTypes;
 import org.spongepowered.api.entity.living.player.Player;
 
 public class PlayerProfile {
@@ -80,8 +82,10 @@ public class PlayerProfile {
 
     // Updates player's EXP bar to display charge
     private void displayCharge() {
-        player.offer(Keys.EXPERIENCE_LEVEL, charge);
-        // TODO Add sound effect when fully charged.
+        player.offer(Keys.EXPERIENCE_LEVEL, getCharge());
+
+        if (getCharge() == getSpeciesObject().getChargeNeeded())
+            player.playSound(SoundTypes.BLOCK_NOTE_BELL, SoundCategories.PLAYER, player.getPosition(), 0);
     }
 
 }
