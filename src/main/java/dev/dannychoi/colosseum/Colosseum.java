@@ -3,12 +3,7 @@ package dev.dannychoi.colosseum;
 import com.google.inject.Inject;
 import dev.dannychoi.colosseum.commands.CommandSetCharge;
 import dev.dannychoi.colosseum.commands.CommandSpecies;
-import dev.dannychoi.colosseum.listeners.PlayerLeftClickListener;
-import dev.dannychoi.colosseum.listeners.PlayerRightClickListener;
-import dev.dannychoi.colosseum.listeners.TakeDamageListener;
-import dev.dannychoi.colosseum.species.Species;
-import dev.dannychoi.colosseum.species.SpeciesFinder;
-import dev.dannychoi.colosseum.species.SpeciesType;
+import dev.dannychoi.colosseum.listeners.*;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.command.CommandManager;
@@ -45,7 +40,7 @@ public class Colosseum {
         logger.info("[Colosseum] Beginning setup...");
 
         // This is what will manage List of active players, HashMap tying players to their PlayerProfiles, etc. See GameManager class.
-        gameManager = new GameManager();
+        gameManager = new GameManager(this);
 
         // This registers Minecraft plugin commands to CommandManager.
         registerCommands();
@@ -80,6 +75,8 @@ public class Colosseum {
         em.registerListeners(this, new PlayerLeftClickListener());
         em.registerListeners(this, new PlayerRightClickListener());
         em.registerListeners(this, new TakeDamageListener());
+        em.registerListeners(this, new SnowballFlyingListener());
+        em.registerListeners(this, new EntityCollideListener());
     }
 
     public static GameManager getGameManager() {

@@ -6,13 +6,21 @@ import dev.dannychoi.colosseum.species.SpeciesType;
 import org.spongepowered.api.entity.living.player.Player;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 public class GameManager {
 
+    // 1 - 499: Status codes
+    public static final int CODE_EXPLOSIVE_ARROW_FLYING = 1;
+
+    private StatusManager statusManager;
+    private CooldownManager cooldownManager;
     private HashMap<Player, PlayerProfile> activePlayers;
 
-    public GameManager() {
+    public GameManager(Colosseum plugin) {
         activePlayers = new HashMap<Player, PlayerProfile>();
+        statusManager = new StatusManager();
+        cooldownManager = new CooldownManager(plugin);
     }
 
     public void setPlayerSpecies(Player p, SpeciesType st) {
@@ -22,13 +30,23 @@ public class GameManager {
         pSpecies.equip(p);
     }
 
-    // May be null!
-    public PlayerProfile getPlayerProfileOf(Player p) {
-        return activePlayers.get(p);
+    public Optional<PlayerProfile> getPlayerProfileOf(Player p) {
+        if (isPlayerActive(p))
+            return Optional.of(activePlayers.get(p));
+        else
+            return Optional.empty();
     }
 
     public boolean isPlayerActive(Player p) {
         return activePlayers.containsKey(p);
+    }
+
+    public StatusManager getStatusManager() {
+        return statusManager;
+    }
+
+    public CooldownManager getCooldownManager() {
+        return cooldownManager;
     }
 
 }
