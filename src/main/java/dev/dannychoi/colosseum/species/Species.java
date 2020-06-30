@@ -19,5 +19,6 @@ public interface Species {
     int getChargeNeeded();
     int getChargePerUse();
     String getSkillName();
+    ChargeType getChargeType();
 
 }

@@ -61,7 +61,22 @@ public class TakeDamageListener {
                 damageType = Colosseum.ATTACKTYPE_MELEE; // TODO: Check for cases where player indirectly attacks player. Eg) they set off TNT on another player.
 
             int chargeToAdd = attackerPP.getSpeciesObject().getCPH();
-            attackerPP.addCharge(chargeToAdd);
+            // This switch statement determines if charge should be given based on ChargeType
+            // Eg) an archer using melee should NOT get charge (since their ChargeType is ONLY_BOW).
+            switch (attackerPP.getSpeciesObject().getChargeType()) {
+                case BOTH:
+                    attackerPP.addCharge(chargeToAdd);
+                    break;
+                case ONLY_BOW:
+                    if (damageType == Colosseum.ATTACKTYPE_PROJECTILE)
+                        attackerPP.addCharge(chargeToAdd);
+                    break;
+                case ONLY_MELEE:
+                    if (damageType == Colosseum.ATTACKTYPE_MELEE)
+                        attackerPP.addCharge(chargeToAdd);
+                    break;
+
+            }
 
             attackerPP.getSpeciesObject().onHitPlayer(attackerPP, damagedPP, damageType);
             damagedPP.getSpeciesObject().onTakeDamage(damagedPP, null);

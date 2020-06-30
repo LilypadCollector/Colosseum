@@ -167,4 +167,9 @@ public class SpeciesDog implements Species {
     public String getSkillName() {
         return "Bite";
     }
+
+    @Override
+    public ChargeType getChargeType() {
+        return ChargeType.BOTH;
+    }
 }

@@ -2,7 +2,6 @@ package dev.dannychoi.colosseum.species;
 
 import dev.dannychoi.colosseum.PlayerProfile;
 import dev.dannychoi.colosseum.Utils;
-import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.effect.particle.ParticleTypes;
 import org.spongepowered.api.effect.potion.PotionEffectTypes;
@@ -15,9 +14,6 @@ import org.spongepowered.api.item.inventory.entity.MainPlayerInventory;
 import org.spongepowered.api.item.inventory.type.CarriedInventory;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
-import org.spongepowered.api.util.blockray.BlockRay;
-import org.spongepowered.api.util.blockray.BlockRayHit;
-import org.spongepowered.api.world.World;
 
 import java.util.Optional;
 
@@ -146,5 +142,10 @@ public class SpeciesSpacewalker implements Species {
     @Override
     public String getSkillName() {
         return "Teleport";
+    }
+
+    @Override
+    public ChargeType getChargeType() {
+        return ChargeType.BOTH;
     }
 }
