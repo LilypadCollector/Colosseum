@@ -3,6 +3,7 @@ package dev.dannychoi.colosseum;
 import dev.dannychoi.colosseum.species.Species;
 import dev.dannychoi.colosseum.species.SpeciesFinder;
 import dev.dannychoi.colosseum.species.SpeciesType;
+import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
 
 import java.util.HashMap;
@@ -28,6 +29,8 @@ public class GameManager {
         activePlayers.put(p, pp);
         Species pSpecies = SpeciesFinder.getByType(st);
         pSpecies.equip(p);
+        p.offer(Keys.MAX_HEALTH, 40D); // Set to 20 hearts.
+        p.offer(Keys.HEALTH, p.maxHealth().get()); // Heal player
     }
 
     public Optional<PlayerProfile> getPlayerProfileOf(Player p) {

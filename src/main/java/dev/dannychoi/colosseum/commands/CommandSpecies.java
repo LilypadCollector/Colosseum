@@ -7,7 +7,6 @@ import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
 import org.spongepowered.api.command.args.CommandContext;
 import org.spongepowered.api.command.spec.CommandExecutor;
-import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.format.TextColors;
@@ -34,8 +33,6 @@ public class CommandSpecies implements CommandExecutor {
             // If the iterated SpeciesType matches the user's inputted arg.
             if (argSpecies.equalsIgnoreCase(type.toString())) {
                 Colosseum.getGameManager().setPlayerSpecies(sender, type);
-                sender.offer(Keys.MAX_HEALTH, 40D); // Set to 20 hearts.
-                sender.offer(Keys.HEALTH, sender.maxHealth().get()); // Equip player
                 Text successMsg = Text.builder("You are now a ")
                         .append(Text.of(type.toString()))
                         .color(TextColors.GREEN)
