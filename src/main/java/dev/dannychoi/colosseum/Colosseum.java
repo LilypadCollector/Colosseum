@@ -12,7 +12,7 @@ import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.event.EventManager;
 import org.spongepowered.api.event.Listener;
-import org.spongepowered.api.event.game.state.GameStartedServerEvent;
+import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
 
@@ -36,7 +36,7 @@ public class Colosseum {
     private static GameManager gameManager;
 
     @Listener
-    public void onServerStart(GameStartedServerEvent event) {
+    public void onInit(GameInitializationEvent event) {
         logger.info("[Colosseum] Beginning setup...");
 
         // This is what will manage List of active players, HashMap tying players to their PlayerProfiles, etc. See GameManager class.
@@ -76,7 +76,7 @@ public class Colosseum {
         em.registerListeners(this, new PlayerRightClickListener());
         em.registerListeners(this, new TakeDamageListener());
         em.registerListeners(this, new SnowballFlyingListener());
-        em.registerListeners(this, new EntityCollideListener());
+        em.registerListeners(this, new CollideListener());
     }
 
     public static GameManager getGameManager() {
