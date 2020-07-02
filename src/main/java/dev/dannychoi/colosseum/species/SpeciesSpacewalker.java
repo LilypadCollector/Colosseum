@@ -107,7 +107,7 @@ public class SpeciesSpacewalker implements Species {
     }
 
     @Override
-    public int onHitPlayer(PlayerProfile damageAfflicter, PlayerProfile damaged, int damageType) {
+    public int onHitPlayer(PlayerProfile damageAfflicter, PlayerProfile damaged, DamageEntityEvent event) {
         if (damageAfflicter.getCharge() == 100)
             Utils.addPotionEffect(damageAfflicter.getPlayer(), PotionEffectTypes.REGENERATION, 1, 10);
 

@@ -12,7 +12,7 @@ public interface Species {
     void equip(Player p);
     int useSkill(PlayerProfile p);
     int onTakeDamage(PlayerProfile p, DamageEntityEvent event);
-    int onHitPlayer(PlayerProfile damageAfflicter, PlayerProfile damaged, int damageType);
+    int onHitPlayer(PlayerProfile damageAfflicter, PlayerProfile damaged, DamageEntityEvent event);
     SpeciesType getSpeciesType();
     int getCPH();
     int getMaxCharge();

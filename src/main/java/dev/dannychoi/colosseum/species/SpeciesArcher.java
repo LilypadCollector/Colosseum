@@ -3,6 +3,8 @@ package dev.dannychoi.colosseum.species;
 import dev.dannychoi.colosseum.*;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.effect.potion.PotionEffectTypes;
+import org.spongepowered.api.entity.Entity;
+import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.projectile.Snowball;
 import org.spongepowered.api.event.entity.DamageEntityEvent;
@@ -97,11 +99,13 @@ public class SpeciesArcher implements Species {
     }
 
     @Override
-    public int onHitPlayer(PlayerProfile damageAfflicter, PlayerProfile damaged, int damageType) {
+    public int onHitPlayer(PlayerProfile damageAfflicter, PlayerProfile damaged, DamageEntityEvent event) {
         CooldownManager cooldownManager = Colosseum.getGameManager().getCooldownManager();
 
+        boolean isDmgTypeArrow = event.getCause().first(Entity.class).get().getType().equals(EntityTypes.TIPPED_ARROW);
+
         // Speed 2, regen 1 for 7 seconds. 14S cooldown.
-        if (damageType == Colosseum.ATTACKTYPE_PROJECTILE) {
+        if (isDmgTypeArrow) {
             // Checking for 14s cooldown.
             if (cooldownManager.hasCooldown(damageAfflicter, CooldownManager.COOLDOWN_ARCHER_PASSIVE))
                 return FAIL_CODE;

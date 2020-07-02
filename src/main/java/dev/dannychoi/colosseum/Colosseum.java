@@ -27,9 +27,6 @@ import java.util.HashMap;
 )
 public class Colosseum {
 
-    public static final int ATTACKTYPE_MELEE = 0;
-    public static final int ATTACKTYPE_PROJECTILE = 1;
-
     @Inject
     private Logger logger;
 

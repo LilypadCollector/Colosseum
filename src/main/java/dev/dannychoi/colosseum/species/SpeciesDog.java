@@ -134,7 +134,7 @@ public class SpeciesDog implements Species {
     }
 
     @Override
-    public int onHitPlayer(PlayerProfile damageAfflicter, PlayerProfile damaged, int damageType) {
+    public int onHitPlayer(PlayerProfile damageAfflicter, PlayerProfile damaged, DamageEntityEvent event) {
         return 0;
     }
 
