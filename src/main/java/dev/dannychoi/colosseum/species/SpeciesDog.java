@@ -9,8 +9,8 @@ import org.spongepowered.api.effect.sound.SoundTypes;
 import org.spongepowered.api.entity.Entity;
 import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.entity.living.player.Player;
-import org.spongepowered.api.event.cause.entity.damage.source.DamageSource;
 import org.spongepowered.api.event.cause.entity.damage.source.DamageSources;
+import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.enchantment.EnchantmentTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
@@ -117,7 +117,7 @@ public class SpeciesDog implements Species {
 
 
     @Override
-    public int onTakeDamage(PlayerProfile pp, DamageSource dmgSrc) {
+    public int onTakeDamage(PlayerProfile pp, DamageEntityEvent event) {
 
         // Dog has X% chance to get angry when damaged.
         int outOf100 = (new Random()).nextInt(100);

@@ -5,7 +5,7 @@ import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.effect.potion.PotionEffectTypes;
 import org.spongepowered.api.entity.living.player.Player;
 import org.spongepowered.api.entity.projectile.Snowball;
-import org.spongepowered.api.event.cause.entity.damage.source.DamageSource;
+import org.spongepowered.api.event.entity.DamageEntityEvent;
 import org.spongepowered.api.item.ItemTypes;
 import org.spongepowered.api.item.enchantment.EnchantmentTypes;
 import org.spongepowered.api.item.inventory.ItemStack;
@@ -92,7 +92,7 @@ public class SpeciesArcher implements Species {
     }
 
     @Override
-    public int onTakeDamage(PlayerProfile p, DamageSource dmgSrc) {
+    public int onTakeDamage(PlayerProfile p, DamageEntityEvent event) {
         return 0;
     }
 
