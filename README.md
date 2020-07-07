@@ -44,12 +44,14 @@ A player will be assigned the passive effect(s) of their respective species. The
 ## Species
 
 ### Archer
+###### CPH - 25, BOW ONLY
 ###### Skill(s)
 * Explosive Arrow (100 Charge) - Fires an explosive arrow that destroys blocks and deals 6.0 damage to players in a 6 block radius.
 ###### Passive(s)
 * Stealth (14s cooldown) - Upon shooting a player with an arrow, the Archer is granted SPEED 2 and REGEN 1 for 7 seconds.
 
 ### Spacewalker
+###### CPH - 20
 ###### Skill(s)
 * Warp (100 charge) - Warps to the player the spacewalker is facing with a 25-block maximum reach. The spacewalker is granted SPEED 3 for 5 seconds.
 ###### Passive(s)
@@ -57,11 +59,13 @@ A player will be assigned the passive effect(s) of their respective species. The
 
 
 ### Dog
+###### CPH - 10
 ###### Skill(s)
 * Bite (100 charge) - Deals 5 damage and SLOWNESS 1 for 2 seconds to all players in a 5-block radius.
 ###### Passive(s)
 * Rabies (0s cooldown) - When the Dog takes damage, there is a 15% chance that it gains STRENGTH 1 for 3 seconds and SPEED 2 for 7 seconds.
 
 ### Priest (Coming soon)
+###### CPH - 12
 ###### Skill(s)
 ###### Passive(s)
