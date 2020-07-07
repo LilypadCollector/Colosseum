@@ -141,7 +141,7 @@ public class SpeciesSpacewalker implements Species {
 
     @Override
     public String getSkillName() {
-        return "Teleport";
+        return "Warp";
     }
 
     @Override
