@@ -17,7 +17,7 @@ PvP-based Minecraft plugin where players can choose their species, cast unique s
   - [Priest (Coming soon)](#priest-coming-soon)
   
 ## Getting Started
-Setting the plugin up is easy and should take a few minutes at most.
+Setting up the plugin is easy and should take a few minutes at most.
 
 ### Installation
 
